@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">RealEstateApp</string>
+    <string name="offline">Offline</string>
+    <string name="loading">Loading..</string>
+    <string name="error">Error!</string>
+    <string name="euro_sign">€</string>
+    <string name="meter_square">m\u00B2</string>
+    <string name="room">Zi.</string>
+    <string name="bedrooms">bedrooms</string>
+    <string name="header_title">Home Listing</string>
+</resources>
