@@ -8,4 +8,5 @@
     <string name="room">Zi.</string>
     <string name="bedrooms">bedrooms</string>
     <string name="header_title">Home Listing</string>
+    <string name="not_available">NA</string>
 </resources>

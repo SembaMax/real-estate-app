@@ -62,8 +62,7 @@ fun TopBody(modifier: Modifier = Modifier, imageUrl: String? = null, professiona
             model = imageUrl,
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            error = painterResource(id = R.drawable.property_not_found),
-            placeholder = painterResource(id = R.drawable.property_placeholder))
+            error = painterResource(id = R.drawable.property_not_found))
 
         professional?.let {
             Row(
@@ -148,16 +147,21 @@ fun ChipsSection(chips: List<String>) {
 }
 
 @Composable
-fun SpecsSection(price: String? = null, area: String? = null, rooms: String? = null) {
+fun SpecsSection(price: String? = stringResource(id = R.string.not_available), area: String? = null, rooms: String? = null) {
     Row(modifier = Modifier
         .fillMaxWidth()
-        .padding(start = CARD_CONTENT_PADDING.dp, end = CARD_CONTENT_PADDING.dp, top = 5.dp, bottom = 5.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+        .padding(
+            start = CARD_CONTENT_PADDING.dp,
+            end = CARD_CONTENT_PADDING.dp,
+            top = 5.dp,
+            bottom = 5.dp
+        ), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
 
         price?.let {
             Text(
                 text = buildAnnotatedString {
-                  append(stringResource(id = R.string.euro_sign))
-                  append(it)
+                    append(stringResource(id = R.string.euro_sign))
+                    append(it)
                 },
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.headlineLarge,

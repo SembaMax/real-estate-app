@@ -156,7 +156,7 @@ fun CollapsingTopBar(modifier: Modifier = Modifier) {
 
             Row(modifier = Modifier.padding(start = 20.dp, top = 20.dp) , horizontalArrangement = Arrangement.SpaceAround, verticalAlignment = Alignment.CenterVertically) {
 
-                Icon(painter = painterResource(id = R.drawable.ic_home), contentDescription = "address_icon", modifier = Modifier.size(40.dp), tint = MaterialTheme.colorScheme.onSecondary)
+                Icon(painter = painterResource(id = R.drawable.ic_home), contentDescription = "home_icon", modifier = Modifier.size(40.dp), tint = MaterialTheme.colorScheme.onSecondary)
 
                 Text(text = stringResource(id = R.string.header_title),
                     modifier = Modifier.padding(start = 5.dp, top = 5.dp),
