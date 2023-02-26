@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
@@ -28,12 +29,16 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.compose.rememberNavController
 import com.semba.realestateapp.R
 import com.semba.realestateapp.data.model.ListingModel
 import com.semba.realestateapp.design.component.ErrorView
@@ -48,14 +53,18 @@ private val MaxTopBarHeight = 75.dp
 const val LIST_CONTENT_PADDING = 10
 
 @Composable
-fun HomeScreen(navigateTo: (screenDestination: ScreenDestination, args: Map<String, String>) -> Unit) {
-
-    val viewModel: HomeViewModel = hiltViewModel()
+fun HomeRoute(modifier: Modifier = Modifier, viewModel: HomeViewModel = hiltViewModel(), navigateTo: (screenDestination: ScreenDestination, args: Map<String, String>) -> Unit) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    HomeScreen(uiState = uiState, modifier = modifier, navigateTo = navigateTo)
+}
+
+@Composable
+fun HomeScreen(uiState: HomeScreenUiState, modifier: Modifier = Modifier, navigateTo: (screenDestination: ScreenDestination, args: Map<String, String>) -> Unit = {_,_->}) {
 
     val toolbarHeightRange = with(LocalDensity.current) {
         MinTopBarHeight.roundToPx()..MaxTopBarHeight.roundToPx()
     }
+
     val toolbarState = rememberToolbarState(toolbarHeightRange)
     val listState = rememberLazyListState()
 
@@ -89,7 +98,9 @@ fun HomeScreen(navigateTo: (screenDestination: ScreenDestination, args: Map<Stri
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize().nestedScroll(nestedScrollConnection))
+    Box(modifier = modifier
+        .fillMaxSize()
+        .nestedScroll(nestedScrollConnection))
     {
         when (uiState)
         {
@@ -98,13 +109,14 @@ fun HomeScreen(navigateTo: (screenDestination: ScreenDestination, args: Map<Stri
             is HomeScreenUiState.Success ->
             {
                 HomeContent(
-                    listModifier = Modifier.fillMaxSize()
-                    .graphicsLayer { translationY = toolbarState.height + toolbarState.offset }
-                    .pointerInput(Unit) {
-                        detectTapGestures(
-                            onPress = { scope.coroutineContext.cancelChildren() }
-                        )
-                    },
+                    listModifier = Modifier
+                        .fillMaxSize()
+                        .graphicsLayer { translationY = toolbarState.height + toolbarState.offset }
+                        .pointerInput(Unit) {
+                            detectTapGestures(
+                                onPress = { scope.coroutineContext.cancelChildren() }
+                            )
+                        },
                     topBarModifier = Modifier
                         .fillMaxWidth()
                         .height(with(LocalDensity.current) { toolbarState.height.toDp() })
@@ -117,11 +129,12 @@ fun HomeScreen(navigateTo: (screenDestination: ScreenDestination, args: Map<Stri
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun HomeContent(listModifier: Modifier = Modifier, topBarModifier: Modifier = Modifier, listState: LazyListState = rememberLazyListState(), listings: List<ListingModel>, onItemClick: (ListingModel) -> Unit)
 {
         LazyColumn(
-            modifier = listModifier,
+            modifier = listModifier.testTag("listings_lazy_column"),
             contentPadding = PaddingValues(start = LIST_CONTENT_PADDING.dp, end = LIST_CONTENT_PADDING.dp, bottom = LIST_CONTENT_PADDING.dp, top = LIST_CONTENT_PADDING.dp),
             state = listState,
             verticalArrangement = Arrangement.spacedBy(15.dp),
@@ -150,7 +163,8 @@ fun CollapsingTopBar(modifier: Modifier = Modifier) {
                         MaterialTheme.colorScheme.secondary,
                         MaterialTheme.colorScheme.primary
                     )
-                ))
+                )
+            )
             .blur(100.dp)
         ) {
 

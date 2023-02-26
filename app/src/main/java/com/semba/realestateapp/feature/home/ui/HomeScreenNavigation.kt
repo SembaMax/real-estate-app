@@ -14,6 +14,6 @@ fun NavController.navigateToHomeScreen(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.homeScreen(navigateTo: (screenDestination: ScreenDestination, args: Map<String, String>) -> Unit) {
     composable(route = homeRoute) {
-        HomeScreen(navigateTo)
+        HomeRoute(navigateTo = navigateTo)
     }
 }

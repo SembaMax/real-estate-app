@@ -21,6 +21,6 @@ private val args = listOf(
 fun NavGraphBuilder.detailScreen() {
     composable(route = detailRoute, arguments = args) { navBackStackEntry ->
         val listingId = navBackStackEntry.arguments?.getInt(LISTING_ID_ARG) ?: 0
-        DetailScreen(listingId)
+        DetailRoute(listingId = listingId)
     }
 }
