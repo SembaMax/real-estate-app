@@ -3,6 +3,7 @@ package com.semba.realestateapp.data
 import com.semba.realestateapp.data.model.ListingItem
 import com.semba.realestateapp.data.model.toModel
 import junit.framework.TestCase
+import junit.framework.TestCase.assertEquals
 import org.junit.Test
 
 class ModelTest {
@@ -24,15 +25,15 @@ class ModelTest {
 
         val listingModel = listingItem.toModel()
 
-        TestCase.assertEquals(1, listingModel.id)
-        TestCase.assertEquals(1, listingModel.offerType)
-        TestCase.assertEquals(5, listingModel.rooms)
-        TestCase.assertEquals(2, listingModel.bedrooms)
-        TestCase.assertEquals("Berlin", listingModel.city)
-        TestCase.assertEquals(100.0, listingModel.area)
-        TestCase.assertEquals(200000.0, listingModel.price)
-        TestCase.assertEquals("url", listingModel.imageUrl)
-        TestCase.assertEquals("professional", listingModel.professional)
-        TestCase.assertEquals("propertyType", listingModel.propertyType)
+        assertEquals(1, listingModel.id)
+        assertEquals(1, listingModel.offerType)
+        assertEquals(5, listingModel.rooms)
+        assertEquals(2, listingModel.bedrooms)
+        assertEquals("Berlin", listingModel.city)
+        assertEquals(100.0, listingModel.area)
+        assertEquals(200000.0, listingModel.price)
+        assertEquals("url", listingModel.imageUrl)
+        assertEquals("professional", listingModel.professional)
+        assertEquals("propertyType", listingModel.propertyType)
     }
 }
